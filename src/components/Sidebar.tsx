@@ -462,7 +462,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({ x, y, items, onSelect, onClos
   );
 };
 
-// Tree Node Component
+// Tree Node Component with enhanced selection highlight
 interface TreeNodeProps {
   node: TreeNode;
   depth: number;
@@ -499,6 +499,10 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
   
   const handleSelect = () => {
     setSelectedNodeId(nodeId);
+    
+    // Add a subtle visual feedback when selecting a node
+    const element = document.activeElement as HTMLElement;
+    if (element) element.blur();
   };
   
   const handleNodeContextMenu = (e: React.MouseEvent) => {
@@ -575,7 +579,7 @@ const TreeNodeComponent: React.FC<TreeNodeProps> = ({
   );
 };
 
-// Sidebar Component
+// Sidebar Component with enhanced visual feedback
 const Sidebar: React.FC = () => {
   const [contextMenu, setContextMenu] = useState<{
     show: boolean;
@@ -591,7 +595,24 @@ const Sidebar: React.FC = () => {
   const [filteredData, setFilteredData] = useState<TreeNode[]>(explorerData);
   const [activeParadigm, setActiveParadigm] = useState<'all' | 'sql' | 'nosql' | 'memory'>('all');
 
-  // Fetch version from rust
+  const [availableServers, setAvailableServers] = useState<String[]>([]);
+
+  useEffect(() => {
+    // Fetch available servers from rust
+    const fetchAvailableServers = async () => {
+      try {
+        const serversJson = await invoke('get_available_servers');
+        // Parse the JSON string returned from Rust
+        const servers = JSON.parse(serversJson as string);
+        setAvailableServers(servers);
+      } catch (error) {
+        console.error('Error fetching available servers:', error);
+      }
+    };
+    
+    fetchAvailableServers();
+  }, []);
+  
   useEffect(() => {
     const fetchVersion = async () => {
       try {
@@ -689,15 +710,18 @@ const Sidebar: React.FC = () => {
     console.log('Refreshing object explorer');
   };
   
+  // Enhanced brand logo variation based on connection status
+  const isConnected = true; // This would be dynamic in a real app
+  
   return (
     <div className="sidebar">
       <div className="sidebar__header">
         <div className="brand">
           <div className="brand__logo">
-            <i className="fa-solid fa-database"></i>
+            <i className={`fa-solid fa-database ${!isConnected ? 'fa-shake' : ''}`}></i>
           </div>
           <div className="brand__text">
-            <h1>DB Admin</h1>
+            <h1>Object Explorer</h1>
             <p>v{version}</p>
           </div>
         </div>
@@ -732,7 +756,7 @@ const Sidebar: React.FC = () => {
           onClick={() => setActiveParadigm('all')}
         >
           <i className="fa-solid fa-database"></i>
-          <span>All</span>
+          All
         </button>
         <button
           className={`paradigm-option${activeParadigm === 'sql' ? ' selected' : ''}`}
@@ -741,7 +765,7 @@ const Sidebar: React.FC = () => {
           onClick={() => setActiveParadigm('sql')}
         >
           <i className="fa-solid fa-table"></i>
-          <span>SQL</span>
+          SQL
         </button>
         <button
           className={`paradigm-option${activeParadigm === 'nosql' ? ' selected' : ''}`}
@@ -750,7 +774,7 @@ const Sidebar: React.FC = () => {
           onClick={() => setActiveParadigm('nosql')}
         >
           <i className="fa-solid fa-layer-group"></i>
-          <span>NoSQL</span>
+          NoSQL
         </button>
         <button
           className={`paradigm-option${activeParadigm === 'memory' ? ' selected' : ''}`}
@@ -759,13 +783,13 @@ const Sidebar: React.FC = () => {
           onClick={() => setActiveParadigm('memory')}
         >
           <i className="fa-solid fa-bolt"></i>
-          <span>Memory</span>
+          Memory
         </button>
       </div>
       
       <div className="sidebar__content">
         <div className="explorer-header">
-          <h2>Object Explorer</h2>
+          <h2>Databases</h2>
           <div className="explorer-actions">
             <button className="action-button" onClick={handleRefresh} title="Refresh">
               <i className="fa-solid fa-rotate"></i>
@@ -796,8 +820,11 @@ const Sidebar: React.FC = () => {
       
       <div className="sidebar__footer">
         <div className="connection-status">
-          <div className="status-indicator online"></div>
-          <span>Connected</span>
+          {/* Show how many servers are found */}
+          <i className={`fa-solid fa-server ${availableServers.length > 0 ? 'connected' : 'disconnected'}`}></i>
+          <span className="status-text">
+            {availableServers.length > 0 ? `${availableServers.length} Server(s) Found` : 'No Servers Found'}
+          </span>
         </div>
         <div className="footer-actions">
           <button className="footer-button" title="New Query">
