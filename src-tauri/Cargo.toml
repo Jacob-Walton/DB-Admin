@@ -1,7 +1,7 @@
 [package]
-name = "dbms_rs"
+name = "db_admin"
 version = "0.1.0"
-description = "A Tauri App"
+description = "A database management system for nsql db"
 authors = ["Jacob Walton <jacob-walton@konpeki.co.uk"]
 edition = "2021"
 
