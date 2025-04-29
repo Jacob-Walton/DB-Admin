@@ -636,21 +636,7 @@ csstype@^3.0.2:
     "@fortawesome/react-fontawesome" "^0.2.2"
     "@tauri-apps/api" "^2"
     "@tauri-apps/plugin-opener" "^2"
-    db-admin "file:C:/Users/Jacob/AppData/Local/Yarn/Cache/v6/npm-db-admin-0.1.0-09f91616-1f38-4c5d-8787-2b28937e38e9-1745942607405/node_modules/db-admin"
-    dbms_rs "file:C:/Users/Jacob/AppData/Local/Yarn/Cache/v6/npm-db-admin-0.1.0-09f91616-1f38-4c5d-8787-2b28937e38e9-1745942607405/node_modules/db-admin"
-    react "^18.3.1"
-    react-dom "^18.3.1"
-
-"dbms_rs@file:.":
-  version "0.1.0"
-  dependencies:
-    "@fortawesome/fontawesome-free" "^6.7.2"
-    "@fortawesome/fontawesome-svg-core" "^6.7.2"
-    "@fortawesome/free-solid-svg-icons" "^6.7.2"
-    "@fortawesome/react-fontawesome" "^0.2.2"
-    "@tauri-apps/api" "^2"
-    "@tauri-apps/plugin-opener" "^2"
-    db-admin "file:C:/Users/Jacob/AppData/Local/Yarn/Cache/v6/npm-dbms-rs-0.1.0-8da12013-a0e7-410c-b436-97bfb4c21f90-1745942607406/node_modules/dbms_rs"
+    db-admin "file:C:/Users/Jacob/AppData/Local/Yarn/Cache/v6/npm-db-admin-0.1.0-a85b8b64-0f14-4fa5-a414-5d948599a388-1745943001727/node_modules/db-admin"
     react "^18.3.1"
     react-dom "^18.3.1"
 

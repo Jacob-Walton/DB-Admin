@@ -1,6 +1,4 @@
-// lib.rs
 mod config;
-mod servers;
 
 #[tauri::command]
 fn get_version() -> String {
@@ -13,8 +11,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             get_version,
             config::get_theme,
-            config::set_theme,
-            servers::get_available_servers,
+            config::set_theme
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
