@@ -689,7 +689,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "dbms_rs"
+name = "db_admin"
 version = "0.1.0"
 dependencies = [
  "dirs",
